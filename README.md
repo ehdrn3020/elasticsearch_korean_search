@@ -21,3 +21,36 @@ sh setting_aws/setup_server.sh server_1
 ```commandline
 ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 ```
+
+### ElasticSearch 설치
+```commandline
+# Image Download
+sudo docker pull docker.elastic.co/elasticsearch/elasticsearch-wolfi:8.17.4
+
+# Create a new docker network
+sudo docker network create elastic
+
+# Cheak network
+sudo docker network ls
+
+# Run Container ( 비밀번호설정 False )
+sudo docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB \
+  -e "discovery.type=single-node" \
+  -e "xpack.security.enabled=false" \
+  -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+  -e "node.name=es01" \
+  -e "cluster.name=elastic-cluster" \
+  -it docker.elastic.co/elasticsearch/elasticsearch:8.17.4
+```
+
+### Elastic 설치확인
+```commandline
+# Check Elastic Install
+sudo docker image ls
+sudo docker ps
+
+# Check Elasic API
+curl http://localhost:9200
+curl http://localhost:9200/_cluster/health?pretty
+curl http://localhost:9200/_nodes?pretty
+```
