@@ -34,7 +34,7 @@ sudo docker network create elastic
 sudo docker network ls
 
 # Run Container ( 비밀번호설정 False )
-sudo docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB \
+sudo docker run --name es01 --net elastic -p 9200:9200 -d -m 1GB \
   -e "discovery.type=single-node" \
   -e "xpack.security.enabled=false" \
   -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
