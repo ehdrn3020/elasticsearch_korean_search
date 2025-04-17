@@ -3,6 +3,7 @@
 
 ## [ AWS Server Setting ]
 - 설치 서버는 AWS EC2  를 사용
+- 참조 : https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-basic
 ### .env 파일 생성
 - .env는 aws 관련 접속정보가 정의 된 파일
 - setting_aws/env_example 참조하여 생성
@@ -25,7 +26,7 @@ ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 ### ElasticSearch 설치
 ```commandline
 # Image Download
-sudo docker pull docker.elastic.co/elasticsearch/elasticsearch-wolfi:8.17.4
+sudo docker pull docker.elastic.co/elasticsearch/elasticsearch:8.17.4
 
 # Create a new docker network
 sudo docker network create elastic
@@ -33,14 +34,22 @@ sudo docker network create elastic
 # Cheak network
 sudo docker network ls
 
-# Run Container ( 비밀번호설정 False )
-sudo docker run --name es01 --net elastic -p 9200:9200 -d -m 1GB \
+# Run Container ( 보안 비활성화 )
+sudo docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB \
   -e "discovery.type=single-node" \
-  -e "xpack.security.enabled=false" \
   -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
   -e "node.name=es01" \
   -e "cluster.name=elastic-cluster" \
-  -it docker.elastic.co/elasticsearch/elasticsearch:8.17.4
+  -e "xpack.security.enabled=false" \
+  -e "xpack.security.enrollment.enabled=false" \
+  -e "xpack.security.http.ssl.enabled=false" \
+  docker.elastic.co/elasticsearch/elasticsearch:8.17.4
+
+# 로그 확인
+sudo docker logs es01
+
+# 메모리 모니터링
+docker stats es01
 ```
 
 ### Elastic 설치확인
@@ -53,4 +62,16 @@ sudo docker ps
 curl http://localhost:9200
 curl http://localhost:9200/_cluster/health?pretty
 curl http://localhost:9200/_nodes?pretty
+```
+
+### Kibana 설치
+```
+# Image Download
+sudo docker pull docker.elastic.co/kibana/kibana:8.17.4
+
+# Run Container
+sudo docker run --name kib01 --net elastic -p 5601:5601 -it \
+  -e "ELASTICSEARCH_HOSTS=http://es01:9200" \
+  -e "xpack.security.enabled=false" \
+  docker.elastic.co/kibana/kibana:8.17.4
 ```
