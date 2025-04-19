@@ -9,7 +9,9 @@ sudo systemctl start docker
 sudo systemctl enable docker
 # git 설치
 sudo yum install -y git
+
+cd /home/ec2-user 
 # git project clone
 sudo -u ec2-user git clone https://github.com/ehdrn3020/elasticsearch_korean_search.git
 # Docker 볼륨 마운트 디렉토리 생성
-mkdir -p ~/ _data
+mkdir -p _data
