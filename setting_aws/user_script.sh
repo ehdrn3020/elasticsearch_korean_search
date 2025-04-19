@@ -4,6 +4,13 @@ sudo yum install -y yum-utils
 sudo sudo yum update -y
 # Docker 설치
 sudo yum install -y docker
+# Docker Compose 설치
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo curl -SL https://github.com/docker/compose/releases/download/v25.0.5/docker-compose-linux-x86_64 \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+
+
 # Docker 서비스 시작 및 부팅 시 자동 시작 설정
 sudo systemctl start docker
 sudo systemctl enable docker

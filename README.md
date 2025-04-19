@@ -32,6 +32,7 @@ ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 ### ElasticSearch 설치
 ```commandline
 # docker compose file 실행
+cd elasticsearch_korean_search/single_node
 sudo docker compose up -d
 
 # 로그 확인
