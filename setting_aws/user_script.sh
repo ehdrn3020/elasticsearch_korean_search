@@ -22,4 +22,4 @@ sudo -u ec2-user git clone https://github.com/ehdrn3020/elasticsearch_korean_sea
 
 # Docker 볼륨 마운트 디렉토리 생성
 mkdir -p _data
-sudo chown -R 1000:1000 _data
+sudo chown -R 1000:1000 /home/ec2_user/_data
