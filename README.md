@@ -33,13 +33,13 @@ ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 ```commandline
 # docker compose file 실행
 cd elasticsearch_korean_search/single_node
-sudo docker compose up -d
+sudo docker-compose up -d
 
 # 로그 확인
 sudo docker logs es01
 
 # 메모리 모니터링
-docker stats es01
+sudo docker stats es01
 ```
 <br>
 
@@ -48,7 +48,7 @@ docker stats es01
 ```commandline
 # Check Elastic Install
 sudo docker image ls
-sudo docker ps
+sudo docker ps -a
 
 # Check Elasic API
 curl http://localhost:9200
