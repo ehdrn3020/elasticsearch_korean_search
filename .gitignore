@@ -1,5 +1,5 @@
 .idea/*
 */.env
 */keypair.pem
-.vevn/*
+.venv/*
 .vscode/*
