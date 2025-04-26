@@ -1,7 +1,7 @@
 services:
   es01:
     build:
-      context: ../collection
+      context: ./collection
       dockerfile: Dockerfile
     container_name: es01
     environment:
@@ -39,7 +39,7 @@ services:
 
   fapi01:
     build:
-      context: ../generation
+      context: ./generation
       dockerfile: Dockerfile
     container_name: fapi01
     ports:
