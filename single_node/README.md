@@ -1,4 +1,4 @@
-## [ Single Mode 설치 ]
+## [ Single Mode 수동 설치 ]
 
 ### ElasticSearch 설치
 ```commandline
@@ -51,6 +51,25 @@ sudo docker run --name kib01 --net elastic -p 5601:5601 -d \
   -e "ELASTICSEARCH_HOSTS=http://es01:9200" \
   -e "xpack.security.enabled=false" \
   docker.elastic.co/kibana/kibana:8.17.4
+```
+
+### FastAPI 애플리케이션 설치
+```
+# FastAPI 애플리케이션 디렉토리로 이동
+cd generation
+
+# FastAPI 컨테이너 실행 (ElasticSearch와 같은 네트워크에 연결)
+sudo docker run --name fapi01 --net elastic -p 8000:8000 -d \
+  -e "TZ=Asia/Seoul" \
+  -e "ELASTICSEARCH_HOST=http://es01:9200" \
+  fapi01
+
+# 로그 확인
+sudo docker logs fapi01
+
+# API 동작 확인
+curl http://localhost:8000/
+curl http://localhost:8000/status
 ```
 <br>
 

@@ -1,0 +1,57 @@
+{
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 0,
+        "analysis": {
+            "analyzer": {
+                "nori_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "nori_tokenizer",
+                    "filter": ["nori_posfilter"]
+                }
+            },
+            "tokenizer": {
+                "nori_tokenizer": {
+                    "type": "nori_tokenizer",
+                    "decompound_mode": "mixed"
+                }
+            },
+            "filter": {
+                "nori_posfilter": {
+                    "type": "nori_part_of_speech",
+                    "stoptags": ["E", "IC", "J", "MAG", "MAJ", "SC", "SE", "SF", "SP", "SSC", "SSO", "SY", "VCP", "VCN", "VSV"]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "name": {
+                "type": "text",
+                "analyzer": "nori_analyzer"
+            },
+            "address": {
+                "type": "text",
+                "analyzer": "nori_analyzer"
+            },
+            "job": {
+                "type": "text",
+                "analyzer": "nori_analyzer"
+            },
+            "company": {
+                "type": "text",
+                "analyzer": "nori_analyzer"
+            },
+            "catch_phrase": {
+                "type": "text",
+                "analyzer": "nori_analyzer"
+            },
+            "generated_at": {
+                "type": "date"
+            },
+            "timestamp": {
+                "type": "date"
+            }
+        }
+    }
+} 

@@ -34,21 +34,21 @@ ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 # docker compose file 실행
 cd elasticsearch_korean_search/single_node
 sudo docker-compose up -d
+```
+<br>
+
+
+## Elastic(Collection) 설치확인
+```commandline
+# Check Elastic Install
+sudo docker image ls
+sudo docker ps -a
 
 # 로그 확인
 sudo docker logs es01
 
 # 메모리 모니터링
 sudo docker stats es01
-```
-<br>
-
-
-## Elastic 설치확인
-```commandline
-# Check Elastic Install
-sudo docker image ls
-sudo docker ps -a
 
 # Check Elasic API
 curl http://localhost:9200
@@ -67,6 +67,27 @@ curl -X GET "localhost:9200/_analyze" -H 'Content-Type: application/json' -d '
 ```
 <br>
 
+## Fast API(Generation) 설치확인
+```
+# 로그 확인
+sudo docker logs fapi01
+
+# 루트 엔드포인트 테스트
+curl http://localhost:8000/
+{"status":"active","message":"랜덤 데이터 생성 API가 실행 중입니다."}
+
+# 데이터 생성 엔드포인트 테스트
+curl http://localhost:8000/data
+
+```
+<br>
+
+## Kibana 설치확인
+```
+# kibana dashboard 확인
+http://13.123.123.123:5601/app/dev_tools#/console/shell
+```
+<br>
 
 ### 과제
 - 가장 많은 빈도수가 나온 명사 

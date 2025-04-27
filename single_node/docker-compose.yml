@@ -46,6 +46,8 @@ services:
       - "8000:8000"
     environment:
       - TZ=Asia/Seoul
+    volumes:
+      - ./elastic_indexs:/app/elastic_indexs
     networks:
       - elastic
     depends_on:
