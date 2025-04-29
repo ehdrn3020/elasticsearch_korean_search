@@ -86,11 +86,16 @@ curl http://localhost:8000/data
 ```
 # kibana dashboard 확인
 http://13.123.123.123:5601/app/dev_tools#/console/shell
+
+# 한글데이터 인덱스 확인
+GET /korean_data/_search
 ```
 <br>
 
 ### 과제
 - 가장 많은 빈도수가 나온 명사 
+- 기본 템플릿 적용
+- 라우팅 적용
 <br>
 
 
