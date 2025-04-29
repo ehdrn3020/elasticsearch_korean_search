@@ -34,7 +34,8 @@ ES_INDEX_NAME = "random_korean_data"
 # Elasticsearch 인덱스 설정 - 외부 JSON 파일에서 로드
 def load_index_settings() -> Dict[str, Any]:
     """외부 JSON 파일에서 인덱스 설정을 로드하는 함수"""
-    settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'elastic_indexs', 'index_setting.json')
+    # Docker 컨테이너 내부 경로를 직접 지정
+    settings_path = '/app/elastic_indexs/index_setting.json'
     try:
         with open(settings_path, 'r', encoding='utf-8') as f:
             return json.load(f)
