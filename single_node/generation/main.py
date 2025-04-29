@@ -29,7 +29,7 @@ fake = Faker('ko_KR')
 
 # Elasticsearch 클라이언트
 es_client = None
-ES_INDEX_NAME = "random_korean_data"
+ES_INDEX_NAME = "korean_data"
 
 # Elasticsearch 인덱스 설정 - 외부 JSON 파일에서 로드
 def load_index_settings() -> Dict[str, Any]:
