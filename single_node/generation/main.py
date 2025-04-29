@@ -49,12 +49,13 @@ INDEX_SETTINGS = load_index_settings()
 async def setup_elasticsearch() -> None:
     """Elasticsearch 연결 및 인덱스 설정"""
     global es_client
-    
+    logger.info(f"인덱스 11")
     # Elasticsearch 클라이언트 초기화 - Docker Compose에서 설정한 서비스명 사용
     es_client = AsyncElasticsearch(hosts=["http://es01:9200"])
-    
+    logger.info(f"인덱스 22")
     # 인덱스 존재 여부 확인
     if not await es_client.indices.exists(index=ES_INDEX_NAME):
+        logger.info(f"인덱스 33")
         # 인덱스 생성 및 매핑 설정
         logger.info(f"인덱스 '{ES_INDEX_NAME}' 생성 중...")
         await es_client.indices.create(index=ES_INDEX_NAME, body=INDEX_SETTINGS)
