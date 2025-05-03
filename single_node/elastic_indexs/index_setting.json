@@ -32,16 +32,7 @@
             },
             "address": {
                 "type": "text",
-                "analyzer": "nori_analyzer",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword"
-                    },
-                    "district": {
-                        "type": "keyword",
-                        "normalizer": "lowercase"
-                    }
-                }
+                "analyzer": "nori_analyzer"
             },
             "address_district": {
                 "type": "keyword"

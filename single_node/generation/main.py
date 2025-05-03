@@ -8,6 +8,7 @@ import logging
 from elasticsearch import AsyncElasticsearch
 import json
 import os
+import re  # 정규표현식 모듈 추가
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO)
@@ -46,6 +47,28 @@ def load_index_settings() -> Dict[str, Any]:
 # 인덱스 설정 로드
 INDEX_SETTINGS = load_index_settings()
 
+# 주소에서 시/도와 구/군까지 추출하는 함수
+def extract_address_district(address: str) -> str:
+    """
+    주소에서 시/도와 구/군까지 추출하는 함수
+    예: '서울특별시 강남구 삼성동 123-45' -> '서울특별시 강남구'
+    """
+    # 시/도 + 구/군 패턴 매칭
+    pattern = r'^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))\s+([가-힣]+(?:시|군|구))'
+    match = re.search(pattern, address)
+    
+    if match:
+        # 시/도와 구/군 모두 매칭된 경우
+        return f"{match.group(1)} {match.group(2)}"
+    else:
+        # 시/도만 매칭 시도
+        pattern_city = r'^([가-힣]+(?:특별시|광역시|특별자치시|특별자치도|도))'
+        match_city = re.search(pattern_city, address)
+        if match_city:
+            return match_city.group(1)
+        else:
+            return "기타"  # 매칭되지 않는 경우
+
 async def setup_elasticsearch() -> None:
     """Elasticsearch 연결 및 인덱스 설정"""
     global es_client
@@ -65,9 +88,14 @@ async def generate_data_periodically() -> None:
     while True:
         current_time = datetime.datetime.now()
         
+        # 주소 생성
+        address = fake.address()        
+        address_district = extract_address_district(address)
+        
         data: Dict[str, Any] = {
             "name": fake.name(),
-            "address": fake.address(),
+            "address": address,
+            "address_district": address_district,  # 추출된 시/도와 구/군 정보 저장
             "job": fake.job(),
             "company": fake.company(),
             "catch_phrase": fake.catch_phrase(),
