@@ -72,13 +72,12 @@ curl -X GET "localhost:9200/_analyze" -H 'Content-Type: application/json' -d '
 # 로그 확인
 sudo docker logs fapi01
 
+# 해당 컨테이너만 재실행
+sudo docker-compose up --no-deps -d fapi01
+
 # 루트 엔드포인트 테스트
 curl http://localhost:8000/
 {"status":"active","message":"랜덤 데이터 생성 API가 실행 중입니다."}
-
-# 데이터 생성 엔드포인트 테스트
-curl http://localhost:8000/data
-
 ```
 <br>
 
