@@ -34,6 +34,9 @@ ssh -i setting_aws/keypair.pem ec2-user@{server_ip}
 # docker compose file 실행
 cd elasticsearch_korean_search/single_node
 sudo docker-compose up -d
+
+# 삭제
+sudo docker-compose down --rmi all --volumes
 ```
 <br>
 
@@ -73,7 +76,7 @@ curl -X GET "localhost:9200/_analyze" -H 'Content-Type: application/json' -d '
 sudo docker logs fapi01
 
 # 해당 컨테이너만 재실행
-sudo docker-compose up --no-deps -d fapi01
+sudo docker-compose build fapi01 && sudo docker-compose up -d --no-deps --force-recreate fapi01
 
 # 루트 엔드포인트 테스트
 curl http://localhost:8000/
