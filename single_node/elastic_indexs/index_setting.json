@@ -32,11 +32,28 @@
             },
             "address": {
                 "type": "text",
-                "analyzer": "nori_analyzer"
+                "analyzer": "nori_analyzer",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    },
+                    "district": {
+                        "type": "keyword",
+                        "normalizer": "lowercase"
+                    }
+                }
+            },
+            "address_district": {
+                "type": "keyword"
             },
             "job": {
                 "type": "text",
-                "analyzer": "nori_analyzer"
+                "analyzer": "nori_analyzer",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
             },
             "company": {
                 "type": "text",
@@ -54,4 +71,4 @@
             }
         }
     }
-} 
+}
