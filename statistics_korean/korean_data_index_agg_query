@@ -1,0 +1,197 @@
+// 직업별로 많이 분포하는 주소의 시 집계
+GET /korean_data/_search
+{
+  "size": 0,
+  "aggs": {
+    "jobs": {
+      "terms": {
+        "field": "job.keyword",
+        "size": 10
+      },
+      "aggs": {
+        "districts": {
+          "terms": {
+            "field": "address_district.keyword",
+            "size": 10
+          }
+        }
+      }
+    }
+  }
+}
+// >>> 결과
+{
+  "took": 13,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 311,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": []
+  },
+  "aggregations": {
+    "jobs": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 277,
+      "buckets": [
+        {
+          "key": "변리사",
+          "doc_count": 4,
+          "districts": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "대구광역시",
+                "doc_count": 2
+              },
+              {
+                "key": "경상북도",
+                "doc_count": 1
+              },
+              {
+                "key": "울산광역시",
+                "doc_count": 1
+              }
+            ]
+          }
+        },
+        {
+          "key": "사진인화 및 현상기 조작원",
+          "doc_count": 4,
+          "districts": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "경기도",
+                "doc_count": 1
+              },
+              {
+                "key": "대구광역시",
+                "doc_count": 1
+              },
+              {
+                "key": "제주특별자치도",
+                "doc_count": 1
+              }
+            ]
+          }
+        },
+        ....
+      ]
+    }
+  }
+}
+
+
+// 직업별로 많이 분포하는 주요 키워드(캐치프레지즈) 형태소 집계
+GET /korean_data/_search
+{
+  "size": 10,
+  "query": {
+    "match": {
+      "job": "조작원"
+    }
+  },
+  "aggs": {
+    "words": {
+      "significant_text": {
+        "field": "catch_phrase",
+        "size": 10
+      }
+    }
+  }
+}
+// >>> 결과
+{
+  "took": 22,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 294,
+      "relation": "eq"
+    },
+    "max_score": 3.0116303,
+    "hits": [
+      {
+        "_index": "korean_data",
+        "_id": "Gz0Lo5YB9W31s1TsOFzu",
+        "_score": 3.0116303,
+        "_source": {
+          "name": "구미경",
+          "address": "전라남도 시흥시 언주거리 지하535 (서윤김읍)",
+          "address_district": "전라남도 시흥시",
+          "job": "주조기 조작원",
+          "company": "유한회사 임최윤",
+          "catch_phrase": "안전한 정적 연합",
+          "generated_at": "2025-05-06T09:42:23.852973",
+          "timestamp": "2025-05-06T09:42:23.852973"
+        }
+      },
+      {
+        "_index": "korean_data",
+        "_id": "qT0go5YB9W31s1Ts7VxZ",
+        "_score": 3.0116303,
+        "_source": {
+          "name": "김영미",
+          "address": "경기도 용인시 수지구 언주3가 417 (영호류서리)",
+          "address_district": "경기도 용인시",
+          "job": "인쇄기 조작원",
+          "company": "유한회사 장",
+          "catch_phrase": "총 5세대 프로젝트",
+          "generated_at": "2025-05-06T10:06:06.296368",
+          "timestamp": "2025-05-06T10:06:06.296368"
+        }
+      }
+      ...
+    ]
+  },
+  "aggregations": {
+    "terms": {
+      "doc_count": 294,
+      "bg_count": 636,
+      "buckets": [
+        {
+          "key": "정의",
+          "doc_count": 8,
+          "score": 0.03165347771761765,
+          "bg_count": 8
+        },
+        {
+          "key": "형",
+          "doc_count": 22,
+          "score": 0.026921322464845996,
+          "bg_count": 35
+        },
+        {
+          "key": "엑스트라",
+          "doc_count": 8,
+          "score": 0.025112993043022194,
+          "bg_count": 9
+        },
+        {
+          "key": "5",
+          "doc_count": 8,
+          "score": 0.025112993043022194,
+          "bg_count": 9
+        }
+        ...
+      ]
+    }
+  }
+}
