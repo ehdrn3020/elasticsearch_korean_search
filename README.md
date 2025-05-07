@@ -1,5 +1,37 @@
 # elasticsearch_korean_search
 ### 엘라스틱서치 한글 형태소 검색
+<img src="architecture.png" width="600">
+<br>
+
+### 프로젝트 구조
+```
+├── statistics_korean/
+│   └── korean_data_index_agg_query
+├── single_node/
+│   ├── docker-compose.yml
+│   ├── README.md
+│   ├── elastic_indexs/
+│   │   └── index_setting.json
+│   ├── generation/
+│   │   ├── main.py
+│   │   ├── requirements.txt
+│   │   └── Dockerfile
+│   └── collection/
+│       └── Dockerfile
+├── setting_aws/
+│   ├── keypair.pem
+│   ├── .env
+│   ├── env_example 
+│   ├── setup_server.sh
+│   └── user_script.sh
+└── README.md
+```
+- statistics_korean : 예제 파일
+- single_node : 단일노드로 generation, collection docker 실행
+  - generation : 한글 인덱스 생성 FastAPI 서비스
+  - collection : Nori가 설치된 ElasticSearch
+- setting_aws : AWS 서버 자동화 설정
+<br>
 <br>
 
 ## [ AWS Server Setting ]
@@ -94,14 +126,15 @@ GET /korean_data/_search
 ```
 <br>
 
-### 과제
-- 가장 많은 빈도수가 나온 명사 
-- 기본 템플릿 적용
-- 라우팅 적용
+## 검색 집계 예제
+### 기본예제
+statistics_korean/korean_data_index_agg_query
+- 직업별로 많이 분포하는 주소의 시 집계
+- 직업별로 많이 분포하는 주요 키워드(캐치프레지즈) 형태소 집계
+<br>
 <br>
 
-
-### 참조 
+## 참조 
 - 토크나이저에 따른 기본 예제 
   - https://esbook.kimjmin.net/06-text-analysis/6.7-stemming/6.7.2-nori
 - Nori Docs
