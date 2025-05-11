@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y wget
 
 # Celebro tar 파일을 GitHub에서 다운로드합니다.
-RUN wget -O celebro-version.tar.gz https://github.com/lmenezes/celebro/releases/download/v0.9.4/celebro-0.9.4.tar.gz
+RUN wget https://github.com/lmenezes/celebro/releases/download/v0.9.4/celebro-0.9.4.tar.gz
 
 # tar 파일을 추출합니다.
 RUN tar -xzf celebro-version.tar.gz
