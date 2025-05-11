@@ -126,6 +126,14 @@ GET /korean_data/_search
 ```
 <br>
 
+## Cerebro 확인
+```
+https:{$ip}:9000 웹URL에 접속하여,
+"http://es01:9200" 입력
+```
+<img src="cerebro.png" width="700">
+<br>
+
 ## 검색 집계 예제
 ### 기본예제
 statistics_korean/korean_data_index_agg_query
