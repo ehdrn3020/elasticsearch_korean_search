@@ -31,6 +31,11 @@ fake = Faker('ko_KR')
 # Elasticsearch 클라이언트
 es_client = None
 ES_INDEX_NAME = "korean_data"
+# nori 토크나이저의 decompound_mode 옵션
+# 1. none : 어근을 분리하지 않고 완성된 합성어만 저장합니다.
+# 2. discard (디폴트) : 합성어를 분리하여 각 어근만 저장합니다.
+# mixed : 어근과 합성어를 모두 저장합니다.
+
 
 # Elasticsearch 인덱스 설정 - 외부 JSON 파일에서 로드
 def load_index_settings() -> Dict[str, Any]:
